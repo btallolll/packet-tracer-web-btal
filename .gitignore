@@ -1,0 +1,6 @@
+# Scratch & temp test scripts
+scratch/
+.DS_Store
+Thumbs.db
+node_modules/
+*.log

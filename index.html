@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cisco Packet Tracer 8.2.2 (Web & Mobile Edition)</title>
+  <link rel="icon" href="art/app.ico" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="pt-app" class="pt-app">
+    <!-- ==================== 1. MENU BAR ==================== -->
+    <header class="pt-menubar">
+      <div class="pt-menubar-left">
+        <img src="art/app.png" alt="PT" class="pt-app-logo" />
+        <span class="pt-window-title">Cisco Packet Tracer</span>
+        <nav class="pt-menus">
+          <div class="pt-menu-item" data-menu="file">
+            <span>File</span>
+            <div class="pt-dropdown">
+              <button data-action="new-topology">New (مساحة عمل جديدة)</button>
+              <button data-action="load-lab-vlan">Open Lab: Switch &amp; VLANs</button>
+              <button data-action="load-lab-roas">Open Lab: Router-on-a-Stick &amp; DHCP</button>
+              <button data-action="load-lab-ospf">Open Lab: Two Routers &amp; OSPF</button>
+              <hr />
+              <button data-action="export-pkt">Save Topology (.pkt.json)</button>
+              <button data-action="import-pkt">Load Topology (.pkt.json)</button>
+            </div>
+          </div>
+          <div class="pt-menu-item" data-menu="edit">
+            <span>Edit</span>
+            <div class="pt-dropdown">
+              <button data-action="copy-device">📋 نسخ المحدد / العمل (Copy)</button>
+              <button data-action="paste-device">📥 لصق في المساحة (Paste)</button>
+              <button data-action="duplicate-selected">📑 تكرار فوري للمحدد (Duplicate)</button>
+              <button data-action="select-all">☑️ تحديد جميع الأجهزة (Select All)</button>
+              <hr />
+              <button data-action="open-copy-paste-modal">📦 نسخ / لصق كود عمل جاهز</button>
+              <hr />
+              <button data-action="delete-selected">🗑️ حذف المحدد (Delete)</button>
+            </div>
+          </div>
+          <div class="pt-menu-item" data-menu="options">
+            <span>Options</span>
+            <div class="pt-dropdown">
+              <button data-action="toggle-port-labels">✓ Always Show Port Labels</button>
+              <button data-action="toggle-model-labels">✓ Show Device Model Labels</button>
+              <button data-action="toggle-link-lights">✓ Show Link Lights</button>
+              <button data-action="toggle-cli-dark">Toggle Dark/Classic CLI Theme</button>
+            </div>
+          </div>
+          <div class="pt-menu-item" data-menu="view">
+            <span>View</span>
+            <div class="pt-dropdown">
+              <button data-action="zoom-in">Zoom In (+)</button>
+              <button data-action="zoom-reset">Zoom Reset (100%)</button>
+              <button data-action="zoom-out">Zoom Out (-)</button>
+              <hr />
+              <button data-action="view-logical">Logical Workspace</button>
+              <button data-action="view-physical">Physical Workspace (Rack)</button>
+            </div>
+          </div>
+          <div class="pt-menu-item" data-menu="tools">
+            <span>Tools</span>
+            <div class="pt-dropdown">
+              <button data-action="tool-pdu">Add Simple PDU (Ping Envelope)</button>
+              <button data-action="fast-forward">Fast Forward Time (&gt;&gt; 30s STP)</button>
+              <button data-action="power-cycle">Power Cycle Devices</button>
+            </div>
+          </div>
+          <div class="pt-menu-item pt-menu-highlight" data-menu="labs">
+            <span>🧪 جاهز للتجربة (Labs)</span>
+            <div class="pt-dropdown">
+              <button data-action="load-lab-vlan">1. تجربة سويتش 2960 + VLANs + PCs</button>
+              <button data-action="load-lab-roas">2. تجربة راوتر 1941 + سويتش + DHCP</button>
+              <button data-action="load-lab-ospf">3. تجربة راوترين + سويتشات + سيرفر ويب</button>
+              <button data-action="new-topology">4. مساحة عمل فارغة (Blank)</button>
+            </div>
+          </div>
+          <div class="pt-menu-item pt-menu-magic" data-menu="smart">
+            <span>🚀 أدوات ذكية فائقة</span>
+            <div class="pt-dropdown">
+              <button data-action="open-ai-copilot">🤖 فاحص ومساعد الذكاء الاصطناعي (AI Copilot)</button>
+              <button data-action="open-vlsm-planner">🧮 حاسبة وتخطيط الـ VLSM والشبكات</button>
+              <button data-action="open-web-wireshark">🦈 محلل الحزم المباشر (Web Wireshark)</button>
+              <button data-action="open-challenges">🏆 تحديات سيسكو ونظام التقييم (CCNA Lab)</button>
+              <button data-action="open-topo-report">📊 جدول العناوين وتوثيق الشبكة (Report)</button>
+              <hr />
+              <button data-action="toggle-global-theme">🌓 تبديل الوضع الليلي / النهاري</button>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="pt-menubar-right">
+        <button id="btn-mobile-mode" class="pt-mobile-toggle-btn" title="تبديل عرض الجوال / سطح المكتب">
+          📱 وضع الجوال
+        </button>
+        <button id="btn-quick-help" class="pt-help-btn" title="دليل الأوامر والاستخدام">?</button>
+      </div>
+    </header>
+
+    <!-- ==================== 2. MAIN TOOLBAR ==================== -->
+    <div class="pt-main-toolbar">
+      <div class="pt-toolbar-group">
+        <button class="pt-tb-btn" data-action="new-topology" title="New">
+          <img src="art/Toolbar/file.svg" alt="New" />
+        </button>
+        <button class="pt-tb-btn" data-action="import-pkt" title="Open (.pkt.json)">
+          <img src="art/Toolbar/folder.svg" alt="Open" />
+        </button>
+        <button class="pt-tb-btn" data-action="export-pkt" title="Save (.pkt.json)">
+          <img src="art/Toolbar/save.svg" alt="Save" />
+        </button>
+        <button class="pt-tb-btn" data-action="print-topo" title="Print">
+          <img src="art/Toolbar/print.svg" alt="Print" />
+        </button>
+        <button class="pt-tb-btn" data-action="quick-help" title="Network Information">
+          <img src="art/Toolbar/info.svg" alt="Info" />
+        </button>
+      </div>
+      <div class="pt-toolbar-sep"></div>
+      <div class="pt-toolbar-group">
+        <button class="pt-tb-btn" data-action="copy-device" title="Copy (نسخ الأجهزة المحددة أو العمل كامل)">
+          <img src="art/Toolbar/copy.svg" alt="Copy" />
+        </button>
+        <button class="pt-tb-btn" data-action="paste-device" title="Paste (لصق المنسوخ)">
+          <img src="art/Toolbar/paste.svg" alt="Paste" />
+        </button>
+        <button class="pt-tb-btn" data-action="duplicate-selected" title="Duplicate (تكرار فوري للمحدد)" style="font-size:14px;">
+          📑
+        </button>
+        <button class="pt-tb-btn" data-action="open-copy-paste-modal" title="نسخ/لصق عمل جاهز بالكامل" style="font-size:14px;">
+          📦
+        </button>
+        <button class="pt-tb-btn" data-action="undo-action" title="Undo">
+          <img src="art/Toolbar/undo.svg" alt="Undo" />
+        </button>
+        <button class="pt-tb-btn" data-action="redo-action" title="Redo">
+          <img src="art/Toolbar/redo.svg" alt="Redo" />
+        </button>
+      </div>
+      <div class="pt-toolbar-sep"></div>
+      <div class="pt-toolbar-group">
+        <button class="pt-tb-btn" data-action="zoom-in" title="Zoom In">
+          <img src="art/Toolbar/zoom-in.svg" alt="Zoom In" />
+        </button>
+        <button class="pt-tb-btn" data-action="zoom-reset" title="Zoom Reset">
+          <img src="art/Toolbar/zoom-reset.svg" alt="Zoom Reset" />
+        </button>
+        <button class="pt-tb-btn" data-action="zoom-out" title="Zoom Out">
+          <img src="art/Toolbar/zoom-out.svg" alt="Zoom Out" />
+        </button>
+      </div>
+      <div class="pt-toolbar-sep"></div>
+      <!-- ==================== 3. COMMON TOOLS BAR (Merged seamlessly for responsive & desktop) ==================== -->
+      <div class="pt-toolbar-group">
+        <button class="pt-tb-btn active" id="tool-select" data-tool="select" title="Select (تحديد وتحريك)">
+          <img src="art/Toolbar/select.svg" alt="Select" />
+        </button>
+        <button class="pt-tb-btn" id="tool-pan" data-tool="pan" title="تحريك الخلفية بحرية (Pan Canvas)" style="font-size:14px;">
+          ✋
+        </button>
+        <button class="pt-tb-btn" id="tool-box-select" data-tool="box-select" title="تحديد متعدد بالسحب أو اللمس (Multi-Select)" style="font-size:14px;">
+          🔲
+        </button>
+        <button class="pt-tb-btn" id="tool-inspect" data-tool="inspect" title="Inspect (فحص جداول الجهاز MAC/ARP/Routing)">
+          <img src="art/Toolbar/inspect.svg" alt="Inspect" />
+        </button>
+        <button class="pt-tb-btn" id="tool-delete" data-tool="delete" title="Delete (حذف جهاز أو كابل)">
+          <img src="art/Toolbar/delete.svg" alt="Delete" />
+        </button>
+        <button class="pt-tb-btn" id="tool-note" data-tool="note" title="Place Note (إضافة ملاحظة نصية)">
+          <img src="art/Toolbar/notes.svg" alt="Note" />
+        </button>
+        <button class="pt-tb-btn" id="tool-pdu" data-tool="pdu" title="Add Simple PDU (إرسال رسالة Ping بين جهازين)">
+          <img src="art/Toolbar/add-simple-pdu.svg" alt="Add Simple PDU" />
+        </button>
+        <button class="pt-tb-btn" id="tool-complex-pdu" data-tool="complex-pdu" title="Add Complex PDU">
+          <img src="art/Toolbar/add-complex-pdu.svg" alt="Add Complex PDU" />
+        </button>
+      </div>
+      <div class="pt-toolbar-sep"></div>
+      <div class="pt-toolbar-group pt-lab-quick-btns">
+        <span class="pt-lab-label">قوالب سريعة:</span>
+        <button class="pt-chip-btn" data-action="load-lab-vlan">🖧 Switch + VLANs</button>
+        <button class="pt-chip-btn" data-action="load-lab-roas">🌐 Router + DHCP</button>
+        <button class="pt-chip-btn" data-action="load-lab-ospf">⚡ OSPF Lab</button>
+        <button class="pt-chip-btn" data-action="open-copy-paste-modal" style="background:#eff6ff;border-color:#3b82f6;color:#1d4ed8;">📦 نسخ/لصق عمل جاهز</button>
+      </div>
+      <div class="pt-toolbar-sep"></div>
+      <div class="pt-toolbar-group pt-smart-quick-btns">
+        <span class="pt-lab-label" style="color: #4f46e5; font-weight: 700;">أدوات فائقة:</span>
+        <button class="pt-chip-btn pt-chip-magic" data-action="open-ai-copilot" title="AI Network Copilot & Diagnostics">🤖 فاحص الذكاء الاصطناعي</button>
+        <button class="pt-chip-btn pt-chip-magic" data-action="open-vlsm-planner" title="VLSM & Subnet Calculator">🧮 حاسبة VLSM</button>
+        <button class="pt-chip-btn pt-chip-magic" data-action="open-web-wireshark" title="Web Wireshark Packet Sniffer">🦈 Wireshark</button>
+        <button class="pt-chip-btn pt-chip-magic" data-action="open-challenges" title="Interactive CCNA Lab Challenges">🏆 التحديات والتقييم</button>
+        <button class="pt-chip-btn pt-chip-magic" data-action="open-topo-report" title="Addressing Table & Documentation">📊 جدول التوثيق</button>
+      </div>
+    </div>
+
+    <!-- ==================== 4. LOGICAL / PHYSICAL BAR ==================== -->
+    <div class="pt-workspace-bar">
+      <div class="pt-ws-bar-left">
+        <button id="btn-mode-logical" class="pt-ws-pill active" data-ws="logical">
+          <img src="art/Switches/logical_only.svg" alt="" />
+          <span>Logical</span>
+        </button>
+        <button id="btn-mode-physical" class="pt-ws-pill" data-ws="physical">
+          <img src="art/Switches/physical_only.svg" alt="" />
+          <span>Physical</span>
+        </button>
+        <span id="pt-coords" class="pt-coords">x: 450, y: 240</span>
+        <div id="pt-active-action-banner" class="pt-active-action-banner hidden">
+          <span id="pt-active-action-text">اختر موقعاً على المساحة...</span>
+          <button id="btn-cancel-action" class="pt-cancel-inline-btn">✕ إلغاء</button>
+        </div>
+      </div>
+      <div class="pt-ws-bar-right">
+        <span class="pt-root-label">[Root]</span>
+        <button class="pt-nav-circle" data-action="zoom-reset" title="Center Workspace">
+          <img src="art/Toolbar/4-way-nav.svg" alt="Nav" />
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== 5. MAIN WORKSPACE AREA ==================== -->
+    <main class="pt-main-area">
+      <!-- LOGICAL CANVAS WRAPPER -->
+      <div id="logical-workspace" class="pt-canvas-container">
+        <svg id="pt-cables-svg" class="pt-cables-svg"></svg>
+        <div id="pt-nodes-layer" class="pt-nodes-layer"></div>
+        <div id="pt-notes-layer" class="pt-notes-layer"></div>
+        <div id="pt-pdu-layer" class="pt-pdu-layer"></div>
+        <div id="pt-selection-marquee" class="pt-selection-marquee hidden"></div>
+
+        <!-- Floating Mobile / Touch Action Bar for Selected Device(s) -->
+        <div id="pt-floating-device-menu" class="pt-floating-device-menu hidden">
+          <span id="pt-floating-dev-name" class="pt-floating-dev-name">Switch0</span>
+          <button data-float-action="open-cli" id="float-btn-cli" class="pt-float-btn primary">⌨️ CLI</button>
+          <button data-float-action="open-config" id="float-btn-cfg" class="pt-float-btn">⚙️ Config/Desktop</button>
+          <button data-float-action="quick-cable" id="float-btn-cable" class="pt-float-btn">🔌 توصيل</button>
+          <button data-float-action="quick-pdu" id="float-btn-pdu" class="pt-float-btn">✉️ Ping</button>
+          <button data-float-action="copy-dev" class="pt-float-btn" style="background:#0284c7;border-color:#38bdf8;">📋 نسخ</button>
+          <button data-float-action="paste-dev" class="pt-float-btn" style="background:#059669;border-color:#34d399;">📥 لصق</button>
+          <button data-float-action="dup-dev" class="pt-float-btn">📑 تكرار</button>
+          <button data-float-action="delete-dev" class="pt-float-btn danger">🗑️ حذف</button>
+          <button data-float-action="clear-sel" class="pt-float-btn" title="إلغاء التحديد">✕</button>
+        </div>
+
+        <!-- Floating Canvas Controls (Pan, Multi-Select, Copy/Paste, Zoom - Great for Mobile) -->
+        <div class="pt-canvas-zoom-Overlay">
+          <button data-tool="pan" id="overlay-btn-pan" title="تحريك الخلفية (Pan)">✋</button>
+          <button data-tool="box-select" id="overlay-btn-box" title="تحديد متعدد (Multi-Select)">🔲</button>
+          <button data-action="select-all" title="تحديد كل الأجهزة">☑️</button>
+          <button data-action="copy-device" title="نسخ المحدد أو العمل">📋</button>
+          <button data-action="paste-device" title="لصق في المساحة">📥</button>
+          <button data-action="zoom-in" title="تكبير">＋</button>
+          <button data-action="zoom-reset" title="إعادة ضبط وتوسيط">1:1</button>
+          <button data-action="zoom-out" title="تصغير">－</button>
+        </div>
+      </div>
+
+      <!-- PHYSICAL RACK WORKSPACE -->
+      <div id="physical-workspace" class="pt-physical-container hidden">
+        <div class="pt-physical-header">
+          <span>🏢 Home City &gt; Corporate Office &gt; Main Wiring Closet (Rack 0)</span>
+          <button class="pt-chip-btn" data-ws="logical">← العودة إلى Logical</button>
+        </div>
+        <div class="pt-rack-scroll">
+          <div id="pt-rack-units" class="pt-rack-frame"></div>
+        </div>
+      </div>
+
+      <!-- SIMULATION SIDE PANEL (Visible when Simulation Mode is active) -->
+      <aside id="pt-simulation-panel" class="pt-simulation-panel hidden">
+        <div class="pt-sim-header">
+          <span>Simulation Panel</span>
+          <button id="btn-close-sim" class="pt-sim-close">✕</button>
+        </div>
+        <div class="pt-sim-subheader">Event List</div>
+        <div class="pt-sim-table-wrap">
+          <table class="pt-sim-table">
+            <thead>
+              <tr>
+                <th>Vis.</th>
+                <th>Time(sec)</th>
+                <th>Last Device</th>
+                <th>At Device</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody id="pt-sim-events-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pt-sim-controls-box">
+          <div class="pt-sim-controls-title">Play Controls</div>
+          <div class="pt-sim-play-btns">
+            <button id="btn-sim-reset" class="pt-sim-btn" title="Reset Simulation">
+              <img src="art/Simulation/reset.svg" alt="Reset" />
+              <span>Reset</span>
+            </button>
+            <button id="btn-sim-back" class="pt-sim-btn" title="Back">
+              <img src="art/Simulation/step-backward.svg" alt="Back" />
+              <span>Back</span>
+            </button>
+            <button id="btn-sim-play" class="pt-sim-btn primary" title="Auto Capture / Play">
+              <img src="art/Simulation/play.svg" alt="Play" />
+              <span id="sim-play-label">Play</span>
+            </button>
+            <button id="btn-sim-step" class="pt-sim-btn" title="Capture / Forward">
+              <img src="art/Simulation/step-forward.svg" alt="Step" />
+              <span>Forward</span>
+            </button>
+          </div>
+        </div>
+        <div class="pt-sim-filters">
+          <strong>Event List Filters — Visible Events:</strong>
+          <div class="pt-sim-filter-tags">
+            <span>ARP</span><span>CDP</span><span>DHCP</span><span>DNS</span><span>ICMP</span><span>OSPF</span><span>RIP</span><span>STP</span><span>SSH</span><span>TCP</span><span>UDP</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ==================== 6. REALTIME / SIMULATION BAR ==================== -->
+    <div class="pt-time-bar">
+      <div class="pt-time-left">
+        <span id="pt-clock-display" class="pt-clock-display">Time: 00:00:12</span>
+        <button class="pt-time-icon-btn" data-action="power-cycle" title="Power Cycle Devices (إعادة تشغيل كل الأجهزة)">
+          ⟳
+        </button>
+        <button class="pt-time-icon-btn pt-ffw-btn" data-action="fast-forward" title="Fast Forward Time (تسريع الوقت وتجاوز انتظار STP البرتقالي فوراً)">
+          <img src="art/Simulation/ffw.svg" alt="Fast Forward" />
+          <span class="pt-ffw-text">Fast Forward</span>
+        </button>
+      </div>
+      <div class="pt-time-right">
+        <button id="btn-toggle-pdu-panel" class="pt-ws-pill" title="إظهار/إخفاء نافذة رسائل PDU">
+          <span>📋 السيناريو (PDUs)</span>
+        </button>
+        <button id="btn-mode-realtime" class="pt-ws-pill active" data-simmode="realtime">
+          <img src="art/Switches/realtime_only.svg" alt="" />
+          <span>Realtime</span>
+        </button>
+        <button id="btn-mode-simulation" class="pt-ws-pill" data-simmode="simulation">
+          <img src="art/Switches/simulation_only.svg" alt="" />
+          <span>Simulation</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== 7. BOTTOM COMPONENT BOX & PDU LIST ==================== -->
+    <footer class="pt-bottom-dock">
+      <!-- [8] Device-Type & Subcategory Selection Box -->
+      <div class="pt-category-box">
+        <!-- Main Categories Row -->
+        <div class="pt-cat-row" id="pt-main-categories">
+          <button class="pt-cat-btn active" data-cat="network" title="Network Devices (أجهزة الشبكة: راوترات وسويتشات)">
+            <img src="art/ComponentBox/group0_on.png" alt="Network" />
+          </button>
+          <button class="pt-cat-btn" data-cat="end" title="End Devices (الأجهزة الطرفية: كمبيوتر، لابتوب، سيرفر)">
+            <img src="art/ComponentBox/group1.png" alt="End Devices" />
+          </button>
+          <button class="pt-cat-btn" data-cat="components" title="Components (المكونات وإنترنت الأشياء)">
+            <img src="art/ComponentBox/group2.png" alt="Components" />
+          </button>
+          <button class="pt-cat-btn" data-cat="connections" title="Connections (الكابلات والتوصيلات)">
+            <img src="art/ComponentBox/group3.png" alt="Connections" />
+          </button>
+          <button class="pt-cat-btn" data-cat="misc" title="Miscellaneous (أجهزة سريعة ومختلطة)">
+            <img src="art/ComponentBox/group4.png" alt="Misc" />
+          </button>
+        </div>
+        <!-- Subcategories Row -->
+        <div class="pt-subcat-row" id="pt-sub-categories"></div>
+        <!-- Category Label Box -->
+        <div id="pt-category-label" class="pt-category-label">[Network Devices] - Switches</div>
+      </div>
+
+      <!-- [9] Device-Specific Selection Box -->
+      <div class="pt-models-box">
+        <div id="pt-models-strip" class="pt-models-strip"></div>
+        <div id="pt-selected-model-label" class="pt-selected-model-label">2960-24TT (اضغط لإضافته أو اسحبه للمساحة)</div>
+      </div>
+
+      <!-- [10] User Created PDU Window -->
+      <div id="pt-pdu-dock" class="pt-pdu-dock">
+        <div class="pt-pdu-controls">
+          <select id="pt-scenario-select" class="pt-scenario-select">
+            <option value="0">Scenario 0</option>
+          </select>
+          <div class="pt-pdu-btns">
+            <button id="btn-new-pdu" class="pt-small-btn" data-tool="pdu">+ Simple PDU</button>
+            <button id="btn-clear-pdus" class="pt-small-btn">Delete</button>
+          </div>
+        </div>
+        <div class="pt-pdu-table-wrap">
+          <table class="pt-pdu-table">
+            <thead>
+              <tr>
+                <th>Fire</th>
+                <th>Last Status</th>
+                <th>Source</th>
+                <th>Destination</th>
+                <th>Type</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="pt-pdu-tbody">
+              <tr class="pt-pdu-empty-row">
+                <td colspan="6">استخدم أداة المغلف ✉️ لاختبار Ping بين أي جهازين</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==================== PORT PICKER POPUP (For Cable Connection) ==================== -->
+    <div id="pt-port-picker" class="pt-port-picker hidden">
+      <div class="pt-port-picker-header">
+        <span id="pt-port-picker-title">اختر المنفذ (Select Port)</span>
+        <button id="btn-close-port-picker">✕</button>
+      </div>
+      <div id="pt-port-picker-list" class="pt-port-picker-list"></div>
+    </div>
+
+    <!-- ==================== INSPECT POPUP MODAL (MAC / ARP / Routing Table) ==================== -->
+    <div id="pt-inspect-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-inspect-dialog">
+        <div class="pt-dialog-titlebar">
+          <span id="pt-inspect-title">Inspect: Switch0</span>
+          <button class="pt-dialog-close" data-close-modal="pt-inspect-modal">✕</button>
+        </div>
+        <div id="pt-inspect-body" class="pt-inspect-body"></div>
+      </div>
+    </div>
+
+    <!-- ==================== PDU INFORMATION AT DEVICE MODAL (OSI 7 Layers) ==================== -->
+    <div id="pt-pdu-info-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-pdu-info-dialog">
+        <div class="pt-dialog-titlebar">
+          <span id="pt-pdu-modal-title">PDU Information at Device</span>
+          <button class="pt-dialog-close" data-close-modal="pt-pdu-info-modal">✕</button>
+        </div>
+        <div class="pt-dialog-tabs">
+          <button class="pt-dtab active" data-pdutab="osi">OSI Model</button>
+          <button class="pt-dtab" data-pdutab="inbound">Inbound PDU Details</button>
+          <button class="pt-dtab" data-pdutab="outbound">Outbound PDU Details</button>
+        </div>
+        <div id="pt-pdu-modal-content" class="pt-pdu-modal-content"></div>
+      </div>
+    </div>
+
+    <!-- ==================== DEVICE CONFIGURATION WINDOW (Switch0 / Router0 / PC0) ==================== -->
+    <div id="pt-device-modal" class="pt-modal-backdrop hidden">
+      <div id="pt-device-window" class="pt-dialog pt-device-dialog">
+        <!-- Title Bar -->
+        <div id="pt-dev-titlebar" class="pt-dialog-titlebar">
+          <div class="pt-dialog-title-left">
+            <img src="art/app.png" alt="" class="pt-dialog-icon" />
+            <span id="pt-dev-window-title">Switch0</span>
+          </div>
+          <div class="pt-dialog-title-actions">
+            <button id="btn-max-dev-window" class="pt-dialog-max" title="ملء الشاشة / تصغير">▢</button>
+            <button id="btn-close-dev-window" class="pt-dialog-close" title="إغلاق">✕</button>
+          </div>
+        </div>
+
+        <!-- Top Tabs: Physical | Config | CLI | Desktop | Services | Attributes -->
+        <div id="pt-dev-tabs" class="pt-dialog-tabs">
+          <button class="pt-dtab" data-devtab="physical">Physical</button>
+          <button class="pt-dtab" data-devtab="config">Config</button>
+          <button class="pt-dtab active" data-devtab="cli" id="tab-btn-cli">CLI</button>
+          <button class="pt-dtab" data-devtab="desktop" id="tab-btn-desktop">Desktop</button>
+          <button class="pt-dtab" data-devtab="services" id="tab-btn-services">Services</button>
+          <button class="pt-dtab" data-devtab="attributes">Attributes</button>
+        </div>
+
+        <!-- TAB 1: PHYSICAL -->
+        <div id="devtab-physical" class="pt-devtab-pane hidden">
+          <div class="pt-phys-layout">
+            <aside class="pt-phys-modules">
+              <div class="pt-phys-section-title">MODULES</div>
+              <ul class="pt-phys-mod-list">
+                <li class="active">PT-HOST-NM-1CFE</li>
+                <li>PT-HOST-NM-1CGE</li>
+                <li>HWIC-2T (Dual Serial)</li>
+                <li>WMP300N (Wireless)</li>
+                <li>GLC-LH-SMD (SFP)</li>
+              </ul>
+              <div class="pt-phys-mod-desc">
+                Provides FastEthernet / Gigabit / Serial connectivity for Cisco Packet Tracer devices.
+              </div>
+            </aside>
+            <section class="pt-phys-main">
+              <div class="pt-phys-toolbar">
+                <span>Physical Device View</span>
+                <div class="pt-phys-zoom-btns">
+                  <button id="btn-power-toggle" class="pt-power-btn on">⚡ Power: ON</button>
+                </div>
+              </div>
+              <div class="pt-phys-chassis-box">
+                <img id="pt-phys-chassis-img" src="art/PhysicalView/Devices/iRealSwitch2960_24TTFront.png" alt="Chassis" />
+                <div id="pt-phys-ports-summary" class="pt-phys-ports-summary"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- TAB 2: CONFIG -->
+        <div id="devtab-config" class="pt-devtab-pane hidden">
+          <div class="pt-config-split">
+            <aside id="pt-config-sidebar" class="pt-config-sidebar"></aside>
+            <section id="pt-config-main" class="pt-config-main"></section>
+          </div>
+          <div class="pt-equiv-ios-wrap">
+            <div class="pt-equiv-label">Equivalent IOS Commands</div>
+            <pre id="pt-equiv-ios-box" class="pt-equiv-ios-box"></pre>
+          </div>
+        </div>
+
+        <!-- TAB 3: CLI (IOS Command Line Interface) -->
+        <div id="devtab-cli" class="pt-devtab-pane">
+          <div class="pt-cli-header">
+            <span>IOS Command Line Interface</span>
+            <div class="pt-cli-header-btns">
+              <button class="pt-small-btn pt-cli-key-btn" data-clikey="TAB" title="إكمال الأمر التلقائي (Tab Autocomplete)">Tab ⇥ (إكمال)</button>
+              <button class="pt-small-btn pt-cli-key-btn" data-clikey="?" title="قائمة الأوامر والمساعدة (?)">? (مساعدة)</button>
+              <button id="btn-cli-theme" class="pt-small-btn" title="تغيير لون شاشة الأوامر">🌗 المظهر</button>
+              <button id="btn-cli-copy" class="pt-small-btn">Copy</button>
+              <button id="btn-cli-paste" class="pt-small-btn">Paste</button>
+            </div>
+          </div>
+
+          <!-- Terminal Output + Inline Input -->
+          <div id="pt-cli-screen" class="pt-cli-screen">
+            <pre id="pt-cli-output" class="pt-cli-output"></pre>
+            <div class="pt-cli-input-line">
+              <span id="pt-cli-prompt" class="pt-cli-prompt">Switch&gt;</span>
+              <input
+                type="text"
+                id="pt-cli-input"
+                class="pt-cli-input"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                placeholder="اكتب أمر السويتش/الراوتر هنا (أو اضغط Tab للإكمال أو ? للمساعدة)..."
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: DESKTOP (For PC / Laptop / Server) -->
+        <div id="devtab-desktop" class="pt-devtab-pane hidden">
+          <!-- Desktop Icon Grid -->
+          <div id="pt-desktop-grid" class="pt-desktop-grid">
+            <button class="pt-desk-card" data-deskapp="ipconfig">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/ipconfig.png" alt="IP Config" /></div>
+              <span>IP Configuration</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="dialup">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/dialup.png" alt="Dial-up" /></div>
+              <span>Dial-up</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="terminal">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/cmdprompt_icon.png" alt="Terminal" /></div>
+              <span>Terminal</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="cmd">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/cmdprompt.png" alt="Command Prompt" /></div>
+              <span>Command Prompt</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="browser">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/browser.png" alt="Web Browser" /></div>
+              <span>Web Browser</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="wireless">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/PCWirelessLinkInfo.png" alt="PC Wireless" /></div>
+              <span>PC Wireless</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="mib">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/mibbrowser.png" alt="MIB Browser" /></div>
+              <span>MIB Browser</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="ipcomm">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/IPCommunicator.png" alt="IP Communicator" /></div>
+              <span>Cisco IP Communicator</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="email">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/EmailClient.png" alt="Email" /></div>
+              <span>Email</span>
+            </button>
+            <button class="pt-desk-card" data-deskapp="firewall">
+              <div class="pt-desk-icon-box"><img src="art/Workstation/IPv4Firewall.png" alt="Firewall" /></div>
+              <span>IPv4 Firewall</span>
+            </button>
+          </div>
+
+          <!-- Sub-application Window inside Desktop (IP Config, Command Prompt, Terminal, Browser) -->
+          <div id="pt-desk-subapp" class="pt-desk-subapp hidden">
+            <div class="pt-desk-subbar">
+              <span id="pt-desk-subtitle">IP Configuration</span>
+              <button id="btn-close-deskapp" class="pt-desk-subclose">X</button>
+            </div>
+            <div id="pt-desk-subbody" class="pt-desk-subbody"></div>
+          </div>
+        </div>
+
+        <!-- TAB 5: SERVICES (For Server-PT) -->
+        <div id="devtab-services" class="pt-devtab-pane hidden">
+          <div class="pt-config-split">
+            <aside class="pt-config-sidebar" id="pt-services-sidebar"></aside>
+            <section class="pt-config-main" id="pt-services-main"></section>
+          </div>
+        </div>
+
+        <!-- TAB 6: ATTRIBUTES -->
+        <div id="devtab-attributes" class="pt-devtab-pane hidden">
+          <div class="pt-attributes-wrap">
+            <table class="pt-attr-table">
+              <thead>
+                <tr><th>Property</th><th>Value</th></tr>
+              </thead>
+              <tbody id="pt-attr-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Window Footer -->
+        <div class="pt-dialog-footer">
+          <label class="pt-top-check"><input type="checkbox" checked /> Top</label>
+          <span class="pt-footer-hint">Ctrl+F6 or ✕ to close window</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== QUICK HELP / CHEATSHEET MODAL ==================== -->
+    <div id="pt-help-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-help-dialog">
+        <div class="pt-dialog-titlebar">
+          <span>📖 دليل أوامر السويتش والراوتر والـ PC (Cisco Packet Tracer 8.2.2)</span>
+          <button class="pt-dialog-close" data-close-modal="pt-help-modal">✕</button>
+        </div>
+        <div class="pt-help-body" dir="rtl">
+          <div class="pt-help-grid">
+            <div class="pt-help-card">
+              <h3>1️⃣ أوامر السويتش الأساسية (Switch IOS)</h3>
+              <pre dir="ltr">Switch&gt; enable
+Switch# configure terminal
+Switch(config)# hostname SW1
+SW1(config)# enable secret cisco
+SW1(config)# banner motd #Authorized Access Only#
+SW1(config)# service password-encryption
+SW1(config)# no ip domain-lookup</pre>
+            </div>
+            <div class="pt-help-card">
+              <h3>2️⃣ إنشاء الـ VLANs وتعيين المنافذ (Access &amp; Trunk)</h3>
+              <pre dir="ltr">SW1(config)# vlan 10
+SW1(config-vlan)# name Sales
+SW1(config-vlan)# exit
+SW1(config)# interface fa0/1
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport access vlan 10
+SW1(config-if)# exit
+SW1(config)# interface gi0/1
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# switchport trunk allowed vlan 1,10,20</pre>
+            </div>
+            <div class="pt-help-card">
+              <h3>3️⃣ أوامر الراوتر و الـ DHCP و الـ Routing</h3>
+              <pre dir="ltr">Router&gt; enable
+Router# conf t
+Router(config)# interface g0/0/0
+Router(config-if)# ip address 192.168.1.1 255.255.255.0
+Router(config-if)# no shutdown
+Router(config-if)# exit
+Router(config)# ip dhcp pool LAN1
+Router(dhcp-config)# network 192.168.1.0 255.255.255.0
+Router(dhcp-config)# default-router 192.168.1.1
+Router(dhcp-config)# dns-server 8.8.8.8</pre>
+            </div>
+            <div class="pt-help-card">
+              <h3>4️⃣ أوامر الفحص والاستعلام (Show &amp; Verify)</h3>
+              <pre dir="ltr">show running-config       (أو sh run)
+show vlan brief           (أو sh vlan br)
+show ip interface brief   (أو sh ip int br)
+show interfaces trunk     (أو sh int trunk)
+show interfaces status    (أو sh int status)
+show mac address-table    (أو sh mac-address-table)
+show ip route             (جدول التوجيه)
+show cdp neighbors        (الأجهزة المجاورة)
+show spanning-tree        (حالة بروتوكول STP)
+copy run start            (أو wr لحفظ الإعدادات)</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SMART TOOLS: 1. AI COPILOT MODAL ==================== -->
+    <div id="pt-ai-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-smart-dialog">
+        <div class="pt-dialog-titlebar">
+          <div class="pt-dialog-title-left">
+            <span>🤖 مساعد وفاحص الشبكة الذكي (AI Network Copilot & Diagnostics)</span>
+          </div>
+          <button class="pt-dialog-close" data-close-modal="pt-ai-modal">✕</button>
+        </div>
+        <div class="pt-smart-body" dir="rtl">
+          <!-- Top Health Score Banner -->
+          <div class="pt-audit-summary-box">
+            <div class="pt-audit-score-circle">
+              <span id="pt-audit-score-num">100%</span>
+              <small>صحة الشبكة</small>
+            </div>
+            <div class="pt-audit-meta">
+              <h3 id="pt-audit-status-text">الشبكة ممتازة وجاهزة</h3>
+              <p id="pt-audit-subtext">تم فحص جميع الأجهزة والمنافذ والتأكد من خلوها من التعارضات.</p>
+              <div class="pt-audit-actions">
+                <button id="btn-re-audit" class="pt-chip-btn primary">🔍 إعادة فحص الشبكة الآن</button>
+                <button id="btn-auto-fix-all" class="pt-chip-btn accent">⚡ إصلاح كل المشاكل تلقائياً</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Issues List -->
+          <div class="pt-smart-section">
+            <h4>📋 تقرير تشخيص الأخطاء والملاحظات:</h4>
+            <div id="pt-audit-issues-list" class="pt-audit-issues-list">
+              <div class="pt-audit-empty">اضغط "إعادة فحص الشبكة" لتحليل الإعدادات واكتشاف الأخطاء.</div>
+            </div>
+          </div>
+
+          <!-- Interactive AI Q&A Chat -->
+          <div class="pt-smart-section">
+            <h4>💬 اسأل مساعد الشبكات الذكي (AI Copilot):</h4>
+            <div class="pt-ai-quick-prompts">
+              <button class="pt-prompt-chip" data-ai-ask="كيف اضبط OSPF؟">🧭 كيف أضبط OSPF؟</button>
+              <button class="pt-prompt-chip" data-ai-ask="كيف انشئ VLANs وسويتش ترنك؟">🖧 كيفية ضبط الـ VLANs والـ Trunk؟</button>
+              <button class="pt-prompt-chip" data-ai-ask="كيف اشفر الباسووردات بـ Type 5 و 7؟">🔒 كيفية تشفير كلمات المرور 5 و 7؟</button>
+              <button class="pt-prompt-chip" data-ai-ask="لماذا يفشل الـ Ping؟">🛠️ لماذا يفشل الـ Ping؟</button>
+            </div>
+            <div class="pt-ai-chat-box">
+              <div id="pt-ai-chat-messages" class="pt-ai-chat-messages">
+                <div class="pt-ai-msg bot">
+                  مرحباً بك! أنا مساعدك الذكي لشبكات سيسكو. يمكنك سؤالي عن أي أمر أو بروتوكول، أو طلب توجيه خطوة بخطوة.
+                </div>
+              </div>
+              <div class="pt-ai-input-row">
+                <input type="text" id="pt-ai-input" placeholder="اكتب سؤالك هنا... (مثال: كيف أضبط الـ DHCP على الراوتر؟)" />
+                <button id="btn-ai-send" class="pt-small-btn primary">إرسال ↵</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SMART TOOLS: 2. VLSM & SUBNET PLANNER MODAL ==================== -->
+    <div id="pt-vlsm-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-smart-dialog">
+        <div class="pt-dialog-titlebar">
+          <div class="pt-dialog-title-left">
+            <span>🧮 حاسبة ومخطط الـ VLSM والـ Subnetting التفاعلي</span>
+          </div>
+          <button class="pt-dialog-close" data-close-modal="pt-vlsm-modal">✕</button>
+        </div>
+        <div class="pt-smart-body" dir="rtl">
+          <div class="pt-vlsm-inputs-card">
+            <div class="pt-vlsm-input-group">
+              <label>عنوان الشبكة الرئيسي (Major Network):</label>
+              <input type="text" id="vlsm-major-net" value="192.168.1.0" dir="ltr" />
+            </div>
+            <div class="pt-vlsm-input-group">
+              <label>قناع الشبكة الأصلي (CIDR):</label>
+              <select id="vlsm-major-cidr" dir="ltr">
+                <option value="16">/16 (255.255.0.0)</option>
+                <option value="24" selected>/24 (255.255.255.0)</option>
+                <option value="23">/23 (255.255.254.0)</option>
+                <option value="25">/25 (255.255.255.128)</option>
+              </select>
+            </div>
+            <button id="btn-calc-vlsm" class="pt-chip-btn primary">⚡ حساب تقسيم الـ VLSM</button>
+          </div>
+
+          <div class="pt-smart-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4>الشبكات الفرعية المطلوبة (مع عدد الأجهزة):</h4>
+              <button id="btn-add-vlsm-sub" class="pt-small-btn">+ إضافة شبكة فرعية</button>
+            </div>
+            <table class="pt-smart-table" id="pt-vlsm-req-table">
+              <thead>
+                <tr>
+                  <th>اسم الشبكة (Subnet Name)</th>
+                  <th>عدد الأجهزة المطلوبة (Needed Hosts)</th>
+                  <th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody id="pt-vlsm-req-tbody">
+                <tr>
+                  <td><input type="text" value="قسم الإدارة (Admin)" /></td>
+                  <td><input type="number" value="50" min="2" max="1000" /></td>
+                  <td><button class="pt-table-del-btn" onclick="this.closest('tr').remove()">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" value="قسم المبيعات (Sales)" /></td>
+                  <td><input type="number" value="25" min="2" max="1000" /></td>
+                  <td><button class="pt-table-del-btn" onclick="this.closest('tr').remove()">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" value="قسم تقنية المعلومات (IT)" /></td>
+                  <td><input type="number" value="12" min="2" max="1000" /></td>
+                  <td><button class="pt-table-del-btn" onclick="this.closest('tr').remove()">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" value="رابط الراوترات (WAN Link)" /></td>
+                  <td><input type="number" value="2" min="2" max="1000" /></td>
+                  <td><button class="pt-table-del-btn" onclick="this.closest('tr').remove()">✕</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Results Section -->
+          <div class="pt-smart-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4>نتائج تخطيط الـ VLSM:</h4>
+              <button id="btn-apply-vlsm-topo" class="pt-chip-btn accent" title="تطبيق العناوين تلقائياً على الأجهزة بالرسم">
+                🎯 تطبيق العناوين تلقائياً على أجهزة الرسم
+              </button>
+            </div>
+            <div class="pt-table-wrap">
+              <table class="pt-smart-table" id="pt-vlsm-res-table" dir="ltr">
+                <thead>
+                  <tr>
+                    <th>Subnet Name</th>
+                    <th>Needed</th>
+                    <th>Allocated</th>
+                    <th>Network ID</th>
+                    <th>Subnet Mask</th>
+                    <th>Usable IP Range</th>
+                    <th>Broadcast</th>
+                    <th>Wildcard</th>
+                  </tr>
+                </thead>
+                <tbody id="pt-vlsm-res-tbody">
+                  <tr><td colspan="8" style="text-align: center;">اضغط "حساب تقسيم الـ VLSM" لتوليد الجدول.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SMART TOOLS: 3. WEB WIRESHARK MODAL ==================== -->
+    <div id="pt-wireshark-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-wireshark-dialog">
+        <div class="pt-dialog-titlebar">
+          <div class="pt-dialog-title-left">
+            <span>🦈 محلل الحزم المباشر (Web Wireshark Live Packet Sniffer)</span>
+          </div>
+          <button class="pt-dialog-close" data-close-modal="pt-wireshark-modal">✕</button>
+        </div>
+        <div class="pt-wireshark-body">
+          <!-- Filter bar -->
+          <div class="pt-ws-filter-bar">
+            <span>Filter:</span>
+            <input type="text" id="pt-ws-filter-input" placeholder="Apply a display filter ... (e.g. icmp, arp, ospf, 192.168.1.1)" />
+            <button id="btn-ws-filter-apply" class="pt-small-btn primary">Apply</button>
+            <button id="btn-ws-filter-clear" class="pt-small-btn">Clear</button>
+            <div style="flex: 1;"></div>
+            <button id="btn-ws-clear-packets" class="pt-small-btn">🗑️ Clear Packets</button>
+            <button id="btn-ws-export-json" class="pt-small-btn">💾 Export PCAP</button>
+          </div>
+
+          <!-- 1. Packet List Table -->
+          <div class="pt-ws-table-wrap">
+            <table class="pt-ws-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Time</th>
+                  <th>Source</th>
+                  <th>Destination</th>
+                  <th>Protocol</th>
+                  <th>Length</th>
+                  <th>Info</th>
+                </tr>
+              </thead>
+              <tbody id="pt-ws-packet-tbody">
+                <tr class="pt-ws-empty-row"><td colspan="7">No packets captured yet. Send a Ping envelope ✉️ or run ping from CLI to capture packets!</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Split pane: Tree Details & Hex Dump -->
+          <div class="pt-ws-split-pane">
+            <div class="pt-ws-tree-pane" id="pt-ws-tree-details">
+              <div class="pt-ws-pane-header">Packet Details (OSI Layers)</div>
+              <div id="pt-ws-layers-tree" class="pt-ws-layers-tree">
+                <div style="color: #64748b; padding: 10px;">Select a packet above to view protocol layers.</div>
+              </div>
+            </div>
+            <div class="pt-ws-hex-pane" id="pt-ws-hex-dump">
+              <div class="pt-ws-pane-header">Packet Bytes (Hex / ASCII)</div>
+              <pre id="pt-ws-hex-text" class="pt-ws-hex-text">Select a packet above to view hex dump.</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SMART TOOLS: 4. CHALLENGES & AUTO-GRADING MODAL ==================== -->
+    <div id="pt-challenges-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-smart-dialog">
+        <div class="pt-dialog-titlebar">
+          <div class="pt-dialog-title-left">
+            <span>🏆 تحديات سيسكو ونظام التقييم الذاتي (CCNA Lab Challenges & Auto-Grading)</span>
+          </div>
+          <button class="pt-dialog-close" data-close-modal="pt-challenges-modal">✕</button>
+        </div>
+        <div class="pt-smart-body" dir="rtl">
+          <!-- Track Selector -->
+          <div class="pt-challenge-selector-box">
+            <label>اختر التحدي العملي:</label>
+            <select id="pt-challenge-select">
+              <option value="challenge-sec">1. تأمين السويتش وتشفير كلمات المرور (Type 5 &amp; 7)</option>
+              <option value="challenge-vlan">2. إعداد الـ VLANs والـ 802.1Q Trunk</option>
+              <option value="challenge-ospf">3. التوجيه الديناميكي OSPF Routing</option>
+            </select>
+            <button id="btn-check-challenge" class="pt-chip-btn primary">🔄 فحص إنجاز المهام الآن</button>
+          </div>
+
+          <!-- Live Progress Box -->
+          <div class="pt-challenge-progress-card">
+            <div class="pt-challenge-progress-header">
+              <span id="pt-challenge-title">تحدي تأمين السويتش (Switch Hardening &amp; Passwords)</span>
+              <span id="pt-challenge-score" class="pt-challenge-score-badge">0% مكتمل</span>
+            </div>
+            <div class="pt-challenge-bar-bg">
+              <div id="pt-challenge-bar-fill" class="pt-challenge-bar-fill" style="width: 0%;"></div>
+            </div>
+            <p id="pt-challenge-desc" style="margin: 8px 0 0 0; color: #475569; font-size: 13px;"></p>
+          </div>
+
+          <!-- Tasks Checklist -->
+          <div class="pt-smart-section">
+            <h4>قائمة المهام المطلوبة للنجاح:</h4>
+            <div id="pt-challenge-tasks-list" class="pt-challenge-tasks-list"></div>
+          </div>
+
+          <!-- Certificate Box (visible at 100%) -->
+          <div id="pt-cert-box" class="pt-cert-box hidden">
+            <div class="pt-cert-card">
+              <div class="pt-cert-ribbon">🎖️ إنجاز متميز</div>
+              <h2>شهادة إتمام التحدي العملي بنجاح (100%)</h2>
+              <p>تهانينا! لقد أتممت بنجاح جميع متطلبات التكوين المعتمدة في منهج Cisco CCNA.</p>
+              <button id="btn-print-cert" class="pt-chip-btn accent">🖨️ طباعة الشهادة / حفظ PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SMART TOOLS: 5. TOPOLOGY REPORT & ADDRESSING TABLE ==================== -->
+    <div id="pt-report-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-smart-dialog">
+        <div class="pt-dialog-titlebar">
+          <div class="pt-dialog-title-left">
+            <span>📊 توثيق الشبكة وجدول العناوين (Addressing Table & Documentation)</span>
+          </div>
+          <button class="pt-dialog-close" data-close-modal="pt-report-modal">✕</button>
+        </div>
+        <div class="pt-smart-body" dir="rtl">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3>جدول العناوين والمنافذ المكتشفة في الشبكة (Addressing Table):</h3>
+            <button id="btn-print-topo-report" class="pt-chip-btn primary">🖨️ طباعة التقرير / PDF</button>
+          </div>
+          <div class="pt-table-wrap" id="pt-report-print-area">
+            <table class="pt-smart-table" dir="ltr" id="pt-report-table">
+              <thead>
+                <tr>
+                  <th>Device</th>
+                  <th>Model</th>
+                  <th>Interface</th>
+                  <th>IP Address</th>
+                  <th>Subnet Mask</th>
+                  <th>Default Gateway</th>
+                  <th>VLAN</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="pt-report-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== COPY / PASTE READY WORK MODAL ==================== -->
+    <div id="pt-copypaste-modal" class="pt-modal-backdrop hidden">
+      <div class="pt-dialog pt-smart-dialog" style="max-width:680px;">
+        <div class="pt-dialog-titlebar">
+          <div class="pt-dialog-title-left">
+            <span>📦 نسخ ولصق عمل جاهز أو مجموعة أجهزة (Copy &amp; Paste Ready Work)</span>
+          </div>
+          <button class="pt-dialog-close" data-close-modal="pt-copypaste-modal">✕</button>
+        </div>
+        <div class="pt-smart-body" dir="rtl" style="padding:16px;">
+          <p style="margin:0 0 10px 0;font-size:13px;color:#334155;line-height:1.5;">
+            يمكنك هنا <strong>نسخ عملك الحالي بالكامل</strong> (أو الأجهزة المحددة فقط مع توصيلاتها وإعداداتها) ككود جاهز، أو <strong>لصق أي عمل جاهز لديك</strong> لإضافته إلى مساحة العمل الحالية أو استبدالها:
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+            <button id="btn-cp-export-all" class="pt-chip-btn" style="background:#0284c7;color:#fff;border-color:#0284c7;padding:6px 14px;">📋 نسخ العمل الحالي بالكامل</button>
+            <button id="btn-cp-export-sel" class="pt-chip-btn" style="background:#4f46e5;color:#fff;border-color:#4f46e5;padding:6px 14px;">🔲 نسخ الأجهزة المحددة فقط</button>
+            <button id="btn-cp-copy-text" class="pt-chip-btn" style="padding:6px 14px;">📑 نسخ الكود للحافظة (Clipboard)</button>
+            <button id="btn-cp-clear-text" class="pt-chip-btn" style="padding:6px 14px;">🧹 تفريغ المربع للصق عمل خارجي</button>
+          </div>
+          <textarea id="pt-copypaste-textarea" dir="ltr" placeholder="الصق هنا كود العمل الجاهز (JSON) أو اضغط (نسخ العمل الحالي) أعلاه..." style="width:100%;height:210px;font-family:Consolas,monospace;font-size:12px;padding:10px;border:1px solid #94a3b8;border-radius:8px;box-sizing:border-box;background:#0f172a;color:#38bdf8;"></textarea>
+          <div id="pt-copypaste-status" style="margin-top:8px;font-size:12.5px;font-weight:700;color:#16a34a;min-height:18px;"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;justify-content:flex-start;">
+            <button id="btn-cp-merge" class="pt-chip-btn" style="background:#16a34a;color:#fff;border-color:#16a34a;padding:8px 18px;font-size:13px;">➕ لصق وإضافة مع العمل الحالي (Merge / Paste)</button>
+            <button id="btn-cp-replace" class="pt-chip-btn" style="background:#ea580c;color:#fff;border-color:#ea580c;padding:8px 18px;font-size:13px;">🔄 استبدال المساحة بهذا العمل الجاهز (Replace All)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden file input for loading topology JSON -->
+    <input type="file" id="pt-file-input" accept=".json,.pkt" class="hidden" />
+  </div>
+
+  <script src="js/core.js?v=2.2"></script>
+  <script src="js/ios.js?v=2.2"></script>
+  <script src="js/network.js?v=2.2"></script>
+  <script src="js/smart_tools.js?v=2.2"></script>
+  <script src="js/app.js?v=2.2"></script>
+</body>
+</html>
+
