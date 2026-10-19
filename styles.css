@@ -35,6 +35,7 @@ html, body {
   color: #1f2937;
   background: var(--pt-panel-bg);
   user-select: none;
+  overscroll-behavior: none;
 }
 
 .hidden {
@@ -459,6 +460,7 @@ html, body {
   border-radius: 6px;
   border: 1.5px solid transparent;
   transition: box-shadow 0.12s, border-color 0.12s;
+  touch-action: none;
 }
 
 .pt-node:hover {
@@ -932,6 +934,10 @@ html, body {
   border-top: 2px solid var(--pt-border-dark);
   flex-shrink: 0;
   overflow: hidden;
+}
+
+.pt-mobile-dock-header {
+  display: none;
 }
 
 /* [8] Left Category Selector */
@@ -1953,40 +1959,339 @@ html, body {
 
 /* ==================== MOBILE RESPONSIVE & MOBILE MODE ==================== */
 @media (max-width: 860px) {
+  /* 1. Simplify and clean Top Navigation */
   .pt-window-title,
   .pt-coords,
   .pt-root-label,
-  .pt-pdu-dock {
+  .pt-pdu-dock,
+  .pt-toolbar-sep,
+  .pt-lab-label {
+    display: none !important;
+  }
+
+  .pt-menubar {
+    height: 38px;
+    padding: 0 8px;
+    background: #092242;
+    color: #ffffff;
+  }
+
+  .pt-menubar-left {
+    gap: 4px;
+  }
+
+  .pt-menu-item {
+    padding: 3px 6px;
+    font-size: 11.5px;
+    color: #e2e8f0;
+    border-radius: 6px;
+  }
+
+  .pt-menu-item:hover,
+  .pt-menu-item.open {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
+
+  .pt-menu-highlight {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+  }
+
+  .pt-menu-magic > span {
+    color: #a5b4fc !important;
+  }
+
+  /* 2. Sleek, scrollable Single-Row Mobile Toolbar */
+  .pt-main-toolbar {
+    min-height: 40px;
+    height: 40px;
+    padding: 2px 6px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #cbd5e1;
+    gap: 3px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+
+  .pt-tb-btn {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 6px;
+  }
+
+  .pt-chip-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 14px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* 3. Streamlined Workspace & Time Bars */
+  .pt-workspace-bar {
+    height: 32px;
+    padding: 0 8px;
+    background: #08264b;
+  }
+
+  .pt-ws-pill {
+    padding: 3px 10px;
+    font-size: 11px;
+    border-radius: 12px;
+  }
+
+  .pt-time-bar {
+    height: 30px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+
+  .pt-clock-display {
+    font-size: 11px;
+  }
+
+  .pt-ffw-text {
     display: none;
   }
 
+  /* 4. Canvas Floating Zoom Controls: Tucked neatly in top-right corner */
+  .pt-canvas-zoom-Overlay {
+    top: 10px;
+    bottom: auto;
+    right: 10px;
+    flex-direction: row;
+    gap: 3px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 3px 6px;
+    border-radius: 20px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    z-index: 35;
+  }
+
+  .pt-canvas-zoom-Overlay button {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: none;
+    background: #ffffff;
+    color: #1e293b;
+  }
+
+  /* Keep only zoom-in, 1:1, zoom-out in mobile overlay - tools are already in the main toolbar */
+  .pt-canvas-zoom-Overlay button[data-tool="pan"],
+  .pt-canvas-zoom-Overlay button[data-tool="box-select"],
+  .pt-canvas-zoom-Overlay button[data-action="select-all"],
+  .pt-canvas-zoom-Overlay button[data-action="copy-device"],
+  .pt-canvas-zoom-Overlay button[data-action="paste-device"] {
+    display: none !important;
+  }
+
+  /* 5. Mobile Floating Device Action Menu: Sleek, compact single-row card */
+  .pt-floating-device-menu {
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 24px);
+    max-width: 390px;
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 24px;
+    padding: 5px 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .pt-floating-device-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pt-floating-dev-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: #38bdf8;
+    padding: 0 6px;
+    white-space: nowrap;
+    border-bottom: none;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .pt-float-btn {
+    padding: 4px 9px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 14px;
+    min-height: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Hide secondary duplicate/copy buttons in compact mobile floating bar to prevent clutter */
+  .pt-floating-device-menu button[data-float-action="copy-dev"],
+  .pt-floating-device-menu button[data-float-action="paste-dev"],
+  .pt-floating-device-menu button[data-float-action="dup-dev"] {
+    display: none;
+  }
+
+  /* 6. Modern Collapsible Bottom Dock (Drawer) */
   .pt-bottom-dock {
     flex-direction: column;
     height: auto;
-    max-height: 155px;
+    max-height: 160px;
+    transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #f8fafc;
+    border-top: 1px solid #cbd5e1;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  .pt-bottom-dock.dock-collapsed {
+    max-height: 34px !important;
+    overflow: hidden;
+  }
+
+  .pt-bottom-dock.dock-collapsed .pt-category-box,
+  .pt-bottom-dock.dock-collapsed .pt-models-box {
+    display: none !important;
+  }
+
+  .pt-bottom-dock.dock-collapsed #pt-dock-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  .pt-mobile-dock-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    min-height: 34px;
+    padding: 3px 12px;
+    background: #0f172a;
+    color: #f8fafc;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .pt-mobile-dock-handle {
+    width: 38px;
+    height: 4px;
+    background: #475569;
+    border-radius: 2px;
+    margin-bottom: 2px;
+  }
+
+  .pt-mobile-dock-title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+
+  .pt-dock-title-text {
+    color: #38bdf8;
+  }
+
+  .pt-dock-toggle-icon {
+    font-size: 11px;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
   }
 
   .pt-category-box {
     width: 100%;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 8px;
     border-right: none;
-    border-bottom: 1px solid var(--pt-border);
-    padding: 3px 6px;
+    border-bottom: 1px solid #cbd5e1;
+    padding: 4px 8px;
     overflow-x: auto;
+    background: #f1f5f9;
+  }
+
+  .pt-cat-row,
+  .pt-subcat-row {
+    gap: 4px;
+  }
+
+  .pt-cat-btn,
+  .pt-subcat-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    flex-shrink: 0;
   }
 
   .pt-category-label {
     display: none;
   }
 
-  .pt-device-dialog {
-    width: 100vw;
-    height: 100dvh;
-    max-width: 100vw;
-    max-height: 100dvh;
-    border-radius: 0;
+  .pt-models-box {
+    padding: 4px 8px;
+    border-right: none;
+    background: #ffffff;
+  }
+
+  .pt-models-strip {
+    gap: 8px;
+    padding-bottom: 4px;
+  }
+
+  .pt-model-item {
+    min-width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  .pt-model-item img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .pt-model-item span {
+    font-size: 10px;
+  }
+
+  .pt-selected-model-label {
+    display: none;
+  }
+
+  /* 7. Full-Screen Comfort Modals on Mobile */
+  .pt-device-dialog,
+  .pt-smart-dialog,
+  .pt-wireshark-dialog {
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: 100vw !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
   }
 
   .pt-modal-backdrop {
@@ -2027,25 +2332,280 @@ html, body {
 .pt-app.mobile-mode .pt-window-title,
 .pt-app.mobile-mode .pt-coords,
 .pt-app.mobile-mode .pt-root-label,
-.pt-app.mobile-mode .pt-pdu-dock {
+.pt-app.mobile-mode .pt-pdu-dock,
+.pt-app.mobile-mode .pt-toolbar-sep,
+.pt-app.mobile-mode .pt-lab-label {
+  display: none !important;
+}
+
+.pt-app.mobile-mode .pt-menubar {
+  height: 38px;
+  padding: 0 8px;
+  background: #092242;
+  color: #ffffff;
+}
+
+.pt-app.mobile-mode .pt-main-toolbar {
+  min-height: 40px;
+  height: 40px;
+  padding: 2px 6px;
+  background: #f1f5f9;
+  border-bottom: 1px solid #cbd5e1;
+  gap: 3px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-wrap: nowrap;
+}
+
+.pt-app.mobile-mode .pt-tb-btn {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+.pt-app.mobile-mode .pt-chip-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  border-radius: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pt-app.mobile-mode .pt-workspace-bar {
+  height: 32px;
+  padding: 0 8px;
+  background: #08264b;
+}
+
+.pt-app.mobile-mode .pt-time-bar {
+  height: 30px;
+  padding: 0 8px;
+  font-size: 11px;
+}
+
+.pt-app.mobile-mode .pt-ffw-text {
+  display: none;
+}
+
+.pt-app.mobile-mode .pt-canvas-zoom-Overlay {
+  top: 10px;
+  bottom: auto;
+  right: 10px;
+  flex-direction: row;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 3px 6px;
+  border-radius: 20px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  z-index: 35;
+}
+
+.pt-app.mobile-mode .pt-canvas-zoom-Overlay button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  background: #ffffff;
+  color: #1e293b;
+}
+
+.pt-app.mobile-mode .pt-canvas-zoom-Overlay button[data-tool="pan"],
+.pt-app.mobile-mode .pt-canvas-zoom-Overlay button[data-tool="box-select"],
+.pt-app.mobile-mode .pt-canvas-zoom-Overlay button[data-action="select-all"],
+.pt-app.mobile-mode .pt-canvas-zoom-Overlay button[data-action="copy-device"],
+.pt-app.mobile-mode .pt-canvas-zoom-Overlay button[data-action="paste-device"] {
+  display: none !important;
+}
+
+.pt-app.mobile-mode .pt-floating-device-menu {
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 390px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 24px;
+  padding: 5px 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.pt-app.mobile-mode .pt-floating-device-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.pt-app.mobile-mode .pt-floating-dev-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #38bdf8;
+  padding: 0 6px;
+  white-space: nowrap;
+  border-bottom: none;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.pt-app.mobile-mode .pt-float-btn {
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 14px;
+  min-height: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.pt-app.mobile-mode .pt-floating-device-menu button[data-float-action="copy-dev"],
+.pt-app.mobile-mode .pt-floating-device-menu button[data-float-action="paste-dev"],
+.pt-app.mobile-mode .pt-floating-device-menu button[data-float-action="dup-dev"] {
   display: none;
 }
 
 .pt-app.mobile-mode .pt-bottom-dock {
   flex-direction: column;
   height: auto;
-  max-height: 155px;
+  max-height: 160px;
+  transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f8fafc;
+  border-top: 1px solid #cbd5e1;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.pt-app.mobile-mode .pt-bottom-dock.dock-collapsed {
+  max-height: 34px !important;
+  overflow: hidden;
+}
+
+.pt-app.mobile-mode .pt-bottom-dock.dock-collapsed .pt-category-box,
+.pt-app.mobile-mode .pt-bottom-dock.dock-collapsed .pt-models-box {
+  display: none !important;
+}
+
+.pt-app.mobile-mode .pt-bottom-dock.dock-collapsed #pt-dock-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.pt-app.mobile-mode .pt-mobile-dock-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  min-height: 34px;
+  padding: 3px 12px;
+  background: #0f172a;
+  color: #f8fafc;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.pt-app.mobile-mode .pt-mobile-dock-handle {
+  width: 38px;
+  height: 4px;
+  background: #475569;
+  border-radius: 2px;
+  margin-bottom: 2px;
+}
+
+.pt-app.mobile-mode .pt-mobile-dock-title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.pt-app.mobile-mode .pt-dock-title-text {
+  color: #38bdf8;
+}
+
+.pt-app.mobile-mode .pt-dock-toggle-icon {
+  font-size: 11px;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
 }
 
 .pt-app.mobile-mode .pt-category-box {
   width: 100%;
   flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
   border-right: none;
-  border-bottom: 1px solid var(--pt-border);
+  border-bottom: 1px solid #cbd5e1;
+  padding: 4px 8px;
   overflow-x: auto;
+  background: #f1f5f9;
+}
+
+.pt-app.mobile-mode .pt-cat-row,
+.pt-app.mobile-mode .pt-subcat-row {
+  gap: 4px;
+}
+
+.pt-app.mobile-mode .pt-cat-btn,
+.pt-app.mobile-mode .pt-subcat-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
 .pt-app.mobile-mode .pt-category-label {
+  display: none;
+}
+
+.pt-app.mobile-mode .pt-models-box {
+  padding: 4px 8px;
+  border-right: none;
+  background: #ffffff;
+}
+
+.pt-app.mobile-mode .pt-models-strip {
+  gap: 8px;
+  padding-bottom: 4px;
+}
+
+.pt-app.mobile-mode .pt-model-item {
+  min-width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.pt-app.mobile-mode .pt-model-item img {
+  width: 32px;
+  height: 32px;
+}
+
+.pt-app.mobile-mode .pt-model-item span {
+  font-size: 10px;
+}
+
+.pt-app.mobile-mode .pt-selected-model-label {
   display: none;
 }
 

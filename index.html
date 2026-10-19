@@ -6,6 +6,100 @@
   <title>Cisco Packet Tracer 8.2.2 (Web & Mobile Edition)</title>
   <link rel="icon" href="art/app.ico" />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- ==================== Anti-AI Cloning & Anti-Scraper Shield ==================== -->
+  <script>
+    (function() {
+      // 1. Framebusting: Prevent embedding inside Lovable or external iframes
+      if (window.top !== window.self) {
+        try {
+          window.top.location = window.self.location;
+        } catch (_) {
+          document.documentElement.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#091e3a;color:#ef4444;font-family:sans-serif;font-size:22px;font-weight:bold;text-align:center;padding:20px;">🚫 غير مسموح بتضمين هذا الموقع في منصات أو نوافذ خارجية (Embedding Denied)</div>';
+          throw new Error('Framing prohibited');
+        }
+      }
+
+      // 2. Comprehensive Headless / AI Crawler Detection
+      function isAutomatedAgent() {
+        if (navigator.webdriver) return true;
+
+        const ua = (navigator.userAgent || '').toLowerCase();
+        if (
+          ua.includes('headless') ||
+          ua.includes('lovable') ||
+          ua.includes('firecrawl') ||
+          ua.includes('puppeteer') ||
+          ua.includes('playwright') ||
+          ua.includes('selenium') ||
+          ua.includes('bytespider')
+        ) {
+          return true;
+        }
+
+        if (
+          document.documentElement.getAttribute('webdriver') ||
+          document.documentElement.getAttribute('selenium') ||
+          document.documentElement.getAttribute('driver')
+        ) {
+          return true;
+        }
+
+        if (
+          window.__nightmare ||
+          window.callPhantom ||
+          window._phantom ||
+          window.__webdriver_evaluate ||
+          window.__playwright ||
+          window.__puppeteer_evaluation_script__
+        ) {
+          return true;
+        }
+
+        if (window.outerWidth === 0 && window.outerHeight === 0) {
+          return true;
+        }
+
+        if (/Chrome/.test(navigator.userAgent) && !/Mobile|Android|iPhone|iPad/.test(navigator.userAgent)) {
+          if (!navigator.plugins || navigator.plugins.length === 0) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      if (isAutomatedAgent()) {
+        window.stop && window.stop();
+        document.documentElement.innerHTML = `
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#091e3a;color:#ffffff;font-family:system-ui,sans-serif;text-align:center;padding:24px;box-sizing:border-box;">
+            <div style="font-size:54px;margin-bottom:16px;">🚫</div>
+            <h1 style="color:#ef4444;font-size:26px;margin:0 0 12px 0;">الوصول محظور — تم منع الاستنساخ الآلي</h1>
+            <p style="font-size:15px;max-width:580px;line-height:1.7;color:#cbd5e1;margin:0 auto 16px auto;">
+              تم اكتشاف أداة استنساخ أو سحب آلي بالذكاء الاصطناعي (AI Crawler / Headless Scraper).
+              هذا المشروع محمي بحقوق الملكية البرمجية ويُمنع نسخه أو إعادة توليده آلياً.
+            </p>
+            <div style="font-size:12px;color:#64748b;border:1px dashed #334155;padding:8px 16px;border-radius:6px;">
+              Protected by Anti-AI Scraping Shield
+            </div>
+          </div>
+        `;
+        throw new Error('AI Scraping Blocked');
+      }
+
+      // 3. Disable Context Menu & Source View Shortcuts to deter casual theft
+      window.addEventListener('keydown', function(e) {
+        if (
+          (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) ||
+          e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c'))
+        ) {
+          e.preventDefault();
+          return false;
+        }
+      });
+    })();
+  </script>
 </head>
 <body>
   <div id="pt-app" class="pt-app">
@@ -350,7 +444,16 @@
     </div>
 
     <!-- ==================== 7. BOTTOM COMPONENT BOX & PDU LIST ==================== -->
-    <footer class="pt-bottom-dock">
+    <footer id="pt-bottom-dock" class="pt-bottom-dock">
+      <!-- Mobile Drawer Pull Handle -->
+      <div id="pt-mobile-dock-header" class="pt-mobile-dock-header" title="إظهار / إخفاء قائمة الأجهزة">
+        <div class="pt-mobile-dock-handle"></div>
+        <div class="pt-mobile-dock-title">
+          <span class="pt-dock-title-text">📦 إضافة الأجهزة والكابلات (Components)</span>
+          <span id="pt-dock-toggle-icon" class="pt-dock-toggle-icon">▲</span>
+        </div>
+      </div>
+
       <!-- [8] Device-Type & Subcategory Selection Box -->
       <div class="pt-category-box">
         <!-- Main Categories Row -->
